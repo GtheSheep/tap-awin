@@ -62,7 +62,82 @@ class TransactionsStream(AwinPublisherStream):
     schema = th.PropertiesList(
         th.Property("id", th.IntegerType),
         th.Property("url", th.StringType),
+        th.Property("advertiserId", th.IntegerType),
+        th.Property("publisherId", th.IntegerType),
+        th.Property("commissionSharingPublisherId", th.IntegerType),
+        th.Property("commissionSharingSelectedRatePublisherId", th.IntegerType),
+        th.Property("siteName", th.StringType),
+        th.Property("commissionStatus", th.StringType),
+        th.Property("commissionAmount", th.ObjectType(
+            th.Property("amount", th.NumberType),
+            th.Property("currency", th.StringType),
+        )),
+        th.Property("saleAmount", th.ObjectType(
+            th.Property("amount", th.NumberType),
+            th.Property("currency", th.StringType),
+        )),
+        th.Property("ipHash", th.IntegerType),
+        th.Property("customerCountry", th.StringType),
+        th.Property("clickRefs", th.ObjectType(
+            th.Property("clickRefs", th.StringType),
+        )),
+        th.Property("clickDate", th.DateTimeType),
         th.Property("transactionDate", th.DateTimeType),
+        th.Property("validationDate", th.DateTimeType),
+        th.Property("type", th.StringType),
+        th.Property("declineReason", th.StringType),
+        th.Property("voucherCodeUsed", th.BooleanType),
+        th.Property("voucherCode", th.StringType),
+        th.Property("lapseTime", th.IntegerType),
+        th.Property("amended", th.BooleanType),
+        th.Property("amendReason", th.StringType),
+        th.Property("oldSaleAmount", th.ObjectType(
+            th.Property("amount", th.NumberType),
+            th.Property("currency", th.StringType),
+        )),
+        th.Property("oldCommissionAmount", th.ObjectType(
+            th.Property("amount", th.NumberType),
+            th.Property("currency", th.StringType),
+        )),
+        th.Property("clickDevice", th.StringType),
+        th.Property("transactionDevice", th.StringType),
+        th.Property("publisherUrl", th.StringType),
+        th.Property("advertiserCountry", th.StringType),
+        th.Property("orderRef", th.StringType),
+        th.Property("customParameters", th.ArrayType(
+            th.ObjectType(
+                th.Property("key", th.StringType),
+                th.Property("value", th.StringType),
+            )
+        )),
+        th.Property("transactionParts", th.ArrayType(
+            th.ObjectType(
+                th.Property("advertiserCost", th.ObjectType(
+                    th.Property("amount", th.NumberType),
+                    th.Property("currency", th.StringType),
+                )),
+                th.Property("amount", th.NumberType),
+                th.Property("commissionAmount", th.NumberType),
+                th.Property("commissionGroupCode", th.StringType),
+                th.Property("commissionGroupId", th.IntegerType),
+                th.Property("commissionGroupName", th.StringType),
+                th.Property("trackedParts", th.ArrayType(
+                    th.ObjectType(
+                        th.Property("amount", th.NumberType),
+                        th.Property("code", th.StringType),
+                        th.Property("currency", th.StringType),
+                    )
+                ))
+            )
+        )),
+        th.Property("paidToPublisher", th.BooleanType),
+        th.Property("paymentId", th.IntegerType),
+        th.Property("transactionQueryId", th.IntegerType),
+        th.Property("originalSaleAmount", th.NumberType),
+        th.Property("advertiserCost", th.ObjectType(
+            th.Property("amount", th.NumberType),
+            th.Property("currency", th.StringType),
+        )),
     ).to_dict()
 
     def get_url_params(
