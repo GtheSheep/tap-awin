@@ -182,7 +182,7 @@ class TransactionsStream(AwinPublisherStream):
                 TIMESTAMP_FORMAT
             )
             if end_date.date() < (datetime.datetime.now() - datetime.timedelta(days=1)).date():
-                next_page_token = end_date + datetime.timedelta(days=1)
+                next_page_token = end_date
             else:
                 next_page_token = None
         return next_page_token
