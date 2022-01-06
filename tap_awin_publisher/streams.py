@@ -181,7 +181,7 @@ class TransactionsStream(AwinPublisherStream):
                 parse_qs(urlparse(response.request.url).query)['endDate'][0],
                 TIMESTAMP_FORMAT
             )
-            if end_date.date() <= (datetime.datetime.now() - datetime.timedelta(days=1)).date():
+            if end_date.date() < datetime.date.today():
                 next_page_token = end_date
             else:
                 next_page_token = None
