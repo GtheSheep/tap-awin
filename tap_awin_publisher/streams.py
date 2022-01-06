@@ -147,8 +147,8 @@ class TransactionsStream(AwinPublisherStream):
             start_date = next_page_token
         else:
             start_date = self.get_starting_timestamp(context) - datetime.timedelta(days=self.config.get("lookback_days"))
-        yesterday = datetime.datetime.now(tz=start_date.tzinfo) - datetime.timedelta(days=1)
-        end_date = min(start_date + datetime.timedelta(days=1), yesterday)
+        today = datetime.datetime.now(tz=start_date.tzinfo)
+        end_date = min(start_date + datetime.timedelta(days=1), today)
         params = {
             'startDate': datetime.datetime.strftime(
                 start_date.replace(hour=0, minute=0, second=0, microsecond=0),
