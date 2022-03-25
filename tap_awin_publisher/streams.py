@@ -46,7 +46,8 @@ class AccountsStream(AwinPublisherStream):
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
         """Return a context dictionary for child streams."""
         return {
-            "account_id": record["accountId"]
+            "account_id": record["accountId"],
+            "account_type": record["accountType"]
         }
 
 
@@ -186,3 +187,50 @@ class TransactionsStream(AwinPublisherStream):
             else:
                 next_page_token = None
         return next_page_token
+
+
+class PublishersStream(AwinPublisherStream):
+    name = "publishers"
+    parent_stream_type = AccountsStream
+    ignore_parent_replication_keys = True
+    path = "/advertisers/{account_id}/publishers/"
+    primary_keys = ["id"]
+    replication_key = None
+    records_jsonpath = "$[*]"
+    next_page_token_jsonpath = None
+    schema = th.PropertiesList(
+        th.Property(
+            "id",
+            th.IntegerType,
+            description="The Publisher's ID"
+        ),
+        th.Property(
+            "name",
+            th.StringType,
+            description="Publisher name"
+        ),
+        th.Property(
+            "primaryRegion",
+            th.StringType,
+            description="Publisher primary region"
+        ),
+        th.Property(
+            "salesRegions",
+            th.ArrayType(th.StringType),
+            description="Additional sales regions of the publisher (if defined)"
+        ),
+        th.Property(
+            "primaryType",
+            th.StringType,
+            description="Primary promotion type of the publisher"
+        ),
+    ).to_dict()
+
+    def get_records(self, context: Optional[dict] = None) -> Iterable[Dict[str, Any]]:
+        """Return a generator of row-type dictionary objects.
+        Each row emitted should be a dictionary of property names to their values.
+        """
+        if context["account_type"] != "advertiser":
+            self.logger.debug("Skipping account {account_id} publishers.".format(account_id=context["account_id"]))
+            return []
+        return super().get_records(context)

@@ -8,11 +8,13 @@ from singer_sdk import typing as th  # JSON schema typing helpers
 from tap_awin_publisher.streams import (
     AccountsStream,
     TransactionsStream,
+    PublishersStream,
 )
 
 STREAM_TYPES = [
     AccountsStream,
     TransactionsStream,
+    PublishersStream,
 ]
 
 
