@@ -3,7 +3,7 @@
 import datetime
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
-from typing import Any, Optional
+from typing import Any, Dict, Iterable, Optional
 
 import requests
 from singer_sdk import typing as th  # JSON Schema typing helpers
