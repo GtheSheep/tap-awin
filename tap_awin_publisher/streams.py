@@ -7,6 +7,7 @@ from typing import Any, Dict, Iterable, Optional
 
 import requests
 from singer_sdk import typing as th  # JSON Schema typing helpers
+from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 
 from tap_awin_publisher.client import AwinPublisherStream
@@ -234,3 +235,23 @@ class PublishersStream(AwinPublisherStream):
             self.logger.debug("Skipping account {account_id} publishers.".format(account_id=context["account_id"]))
             return []
         return super().get_records(context)
+
+    def validate_response(self, response: requests.Response) -> None:
+        if response.status_code == 104:
+            msg = (
+                f"{response.status_code} Server Error: "
+                f"{response.reason} for path: {self.path}"
+            )
+            raise RetriableAPIError(msg)
+        elif 400 <= response.status_code < 500:
+            msg = (
+                f"{response.status_code} Client Error: "
+                f"{response.reason} for path: {self.path}"
+            )
+            raise FatalAPIError(msg)
+        elif 500 <= response.status_code < 600:
+            msg = (
+                f"{response.status_code} Server Error: "
+                f"{response.reason} for path: {self.path}"
+            )
+            raise RetriableAPIError(msg)
