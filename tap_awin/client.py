@@ -1,4 +1,4 @@
-"""REST client handling, including awin-publisherStream base class."""
+"""REST client handling, including AwinStream base class."""
 
 import backoff
 import requests
@@ -10,8 +10,8 @@ from singer_sdk.streams import RESTStream
 from singer_sdk.authenticators import BearerTokenAuthenticator
 
 
-class AwinPublisherStream(RESTStream):
-    """awin-publisher stream class."""
+class AwinStream(RESTStream):
+    """AWin stream class."""
 
     url_base = "https://api.awin.com"
 

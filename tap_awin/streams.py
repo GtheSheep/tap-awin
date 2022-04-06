@@ -1,4 +1,4 @@
-"""Stream type classes for tap-awin-publisher."""
+"""Stream type classes for tap-awin."""
 
 import datetime
 from urllib.parse import urlparse
@@ -10,12 +10,12 @@ from singer_sdk import typing as th  # JSON Schema typing helpers
 from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 
-from tap_awin_publisher.client import AwinPublisherStream
+from tap_awin.client import AwinStream
 
 TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
-class AccountsStream(AwinPublisherStream):
+class AccountsStream(AwinStream):
     name = "accounts"
     path = "/accounts"
     primary_keys = ["accountId"]
@@ -52,11 +52,11 @@ class AccountsStream(AwinPublisherStream):
         }
 
 
-class TransactionsStream(AwinPublisherStream):
+class TransactionsStream(AwinStream):
     name = "transactions"
     parent_stream_type = AccountsStream
     ignore_parent_replication_keys = True
-    path = "/advertisers/{account_id}/transactions/"
+    path = "/{account_type}s/{account_id}/transactions/"
     primary_keys = ["id"]
     replication_key = "transactionDate"
     records_jsonpath = "$[*]"
@@ -190,7 +190,7 @@ class TransactionsStream(AwinPublisherStream):
         return next_page_token
 
 
-class PublishersStream(AwinPublisherStream):
+class PublishersStream(AwinStream):
     name = "publishers"
     parent_stream_type = AccountsStream
     ignore_parent_replication_keys = True

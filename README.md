@@ -1,6 +1,11 @@
-# tap-awin-publisher
+# tap-awin
 
-`tap-awin-publisher` is a Singer tap for Awin Publisher.
+`tap-awin` is a Singer tap for Awin. The tap focuses on obtaining account information, then handling sub-streams according to account type.  
+Publishers can access streams:  
+* Transactions  
+Advertisers can access streams:  
+* Transactions
+* Publishers  
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 
@@ -14,7 +19,7 @@ A full list of supported settings and capabilities for this
 tap is available by running:
 
 ```bash
-tap-awin-publisher --about
+tap-awin --about
 ```
 
 ### Source Authentication and Authorization
@@ -23,14 +28,14 @@ tap-awin-publisher --about
 
 ## Usage
 
-You can easily run `tap-awin-publisher` by itself or in a pipeline using [Meltano](https://meltano.com/).
+You can easily run `tap-awin` by itself or in a pipeline using [Meltano](https://meltano.com/).
 
 ### Executing the Tap Directly
 
 ```bash
-tap-awin-publisher --version
-tap-awin-publisher --help
-tap-awin-publisher --config CONFIG --discover > ./catalog.json
+tap-awin --version
+tap-awin --help
+tap-awin --config CONFIG --discover > ./catalog.json
 ```
 
 ## Developer Resources
@@ -46,17 +51,17 @@ poetry install
 
 ### Create and Run Tests
 
-Create tests within the `tap_awin_publisher/tests` subfolder and
+Create tests within the `tap_awin/tests` subfolder and
   then run:
 
 ```bash
 poetry run pytest
 ```
 
-You can also test the `tap-awin-publisher` CLI interface directly using `poetry run`:
+You can also test the `tap-awin` CLI interface directly using `poetry run`:
 
 ```bash
-poetry run tap-awin-publisher --help
+poetry run tap-awin --help
 ```
 
 ### Testing with [Meltano](https://www.meltano.com)
@@ -73,7 +78,7 @@ Next, install Meltano (if you haven't already) and any needed plugins:
 # Install meltano
 pipx install meltano
 # Initialize meltano within this directory
-cd tap-awin-publisher
+cd tap-awin
 meltano install
 ```
 
@@ -81,9 +86,9 @@ Now you can test and orchestrate using Meltano:
 
 ```bash
 # Test invocation:
-meltano invoke tap-awin-publisher --version
+meltano invoke tap-awin --version
 # OR run a test `elt` pipeline:
-meltano elt tap-awin-publisher target-jsonl
+meltano elt tap-awin target-jsonl
 ```
 
 ### SDK Dev Guide
