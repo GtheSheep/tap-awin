@@ -1,11 +1,11 @@
-"""awin-publisher tap class."""
+"""AWin tap class."""
 
 from typing import List
 
 from singer_sdk import Tap, Stream
 from singer_sdk import typing as th  # JSON schema typing helpers
 
-from tap_awin_publisher.streams import (
+from tap_awin.streams import (
     AccountsStream,
     TransactionsStream,
     PublishersStream,
@@ -18,9 +18,9 @@ STREAM_TYPES = [
 ]
 
 
-class TapAwinPublisher(Tap):
+class TapAwin(Tap):
 
-    name = "tap-awin-publisher"
+    name = "tap-awin"
 
     config_jsonschema = th.PropertiesList(
         th.Property(

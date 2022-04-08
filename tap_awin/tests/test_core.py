@@ -4,7 +4,7 @@ import datetime
 
 from singer_sdk.testing import get_standard_tap_tests
 
-from tap_awin_publisher.tap import TapAwinPublisher
+from tap_awin.tap import TapAwin
 
 SAMPLE_CONFIG = {
     "start_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
@@ -16,7 +16,7 @@ SAMPLE_CONFIG = {
 def test_standard_tap_tests():
     """Run standard tap tests from the SDK."""
     tests = get_standard_tap_tests(
-        TapAwinPublisher,
+        TapAwin,
         config=SAMPLE_CONFIG
     )
     for test in tests:
