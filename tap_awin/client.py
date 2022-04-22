@@ -39,7 +39,7 @@ class AwinStream(RESTStream):
         yield from extract_jsonpath(self.records_jsonpath, input=response.json())
 
     def validate_response(self, response: requests.Response) -> None:
-        if response.status_code <= 429:
+        if 200 < response.status_code <= 429:
             msg = (
                 f"{response.status_code} Server Error: "
                 f"{response.reason} for path: {self.path}"
