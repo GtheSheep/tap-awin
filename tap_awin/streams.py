@@ -57,7 +57,7 @@ class TransactionsStream(AwinStream):
     parent_stream_type = AccountsStream
     ignore_parent_replication_keys = True
     path = "/{account_type}s/{account_id}/transactions/"
-    primary_keys = ["id"]
+    primary_keys = ["id", "transactionDate"]
     replication_key = "transactionDate"
     records_jsonpath = "$[*]"
     next_page_token_jsonpath = None
