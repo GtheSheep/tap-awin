@@ -9,12 +9,14 @@ from tap_awin.streams import (
     AccountsStream,
     TransactionsStream,
     PublishersStream,
+    ReportByPublisherStream,
 )
 
 STREAM_TYPES = [
     AccountsStream,
     TransactionsStream,
     PublishersStream,
+    ReportByPublisherStream,
 ]
 
 
