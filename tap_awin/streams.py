@@ -69,6 +69,7 @@ class TransactionsStream(AwinStream):
         th.Property("commissionSharingPublisherId", th.IntegerType),
         th.Property("commissionSharingSelectedRatePublisherId", th.IntegerType),
         th.Property("siteName", th.StringType),
+        th.Property("campaign", th.StringType),
         th.Property("commissionStatus", th.StringType),
         th.Property("commissionAmount", th.ObjectType(
             th.Property("amount", th.NumberType),
