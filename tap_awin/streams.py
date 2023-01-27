@@ -120,10 +120,6 @@ class TransactionsStream(AwinStream):
         )),
         th.Property("transactionParts", th.ArrayType(
             th.ObjectType(
-                th.Property("advertiserCost", th.ObjectType(
-                    th.Property("amount", th.NumberType),
-                    th.Property("currency", th.StringType),
-                )),
                 th.Property("amount", th.NumberType),
                 th.Property("commissionAmount", th.NumberType),
                 th.Property("commissionGroupCode", th.StringType),
