@@ -82,7 +82,12 @@ class TransactionsStream(AwinStream):
         th.Property("ipHash", th.IntegerType),
         th.Property("customerCountry", th.StringType),
         th.Property("clickRefs", th.ObjectType(
-            th.Property("clickRefs", th.StringType),
+            th.Property("clickRef", th.StringType),
+            th.Property("clickRef2", th.StringType),
+            th.Property("clickRef3", th.StringType),
+            th.Property("clickRef4", th.StringType),
+            th.Property("clickRef5", th.StringType),
+            th.Property("clickRef6", th.StringType),
         )),
         th.Property("clickDate", th.DateTimeType),
         th.Property("transactionDate", th.DateTimeType),
