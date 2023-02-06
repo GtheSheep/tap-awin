@@ -142,6 +142,17 @@ class TransactionsStream(AwinStream):
             th.Property("amount", th.NumberType),
             th.Property("currency", th.StringType),
         )),
+        th.Property("basketProducts", th.ArrayType(
+            th.ObjectType(
+                th.Property("productId", th.StringType),
+                th.Property("productName", th.StringType),
+                th.Property("unitPrice", th.NumberType),
+                th.Property("quantity", th.IntegerType),
+                th.Property("skuCode", th.StringType),
+                th.Property("commissionGroupCode", th.StringType),
+                th.Property("category", th.StringType),
+            )
+        )),
     ).to_dict()
 
     def get_url_params(
