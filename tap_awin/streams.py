@@ -82,7 +82,12 @@ class TransactionsStream(AwinStream):
         th.Property("ipHash", th.IntegerType),
         th.Property("customerCountry", th.StringType),
         th.Property("clickRefs", th.ObjectType(
-            th.Property("clickRefs", th.StringType),
+            th.Property("clickRef", th.StringType),
+            th.Property("clickRef2", th.StringType),
+            th.Property("clickRef3", th.StringType),
+            th.Property("clickRef4", th.StringType),
+            th.Property("clickRef5", th.StringType),
+            th.Property("clickRef6", th.StringType),
         )),
         th.Property("clickDate", th.DateTimeType),
         th.Property("transactionDate", th.DateTimeType),
@@ -115,10 +120,6 @@ class TransactionsStream(AwinStream):
         )),
         th.Property("transactionParts", th.ArrayType(
             th.ObjectType(
-                th.Property("advertiserCost", th.ObjectType(
-                    th.Property("amount", th.NumberType),
-                    th.Property("currency", th.StringType),
-                )),
                 th.Property("amount", th.NumberType),
                 th.Property("commissionAmount", th.NumberType),
                 th.Property("commissionGroupCode", th.StringType),
@@ -140,6 +141,17 @@ class TransactionsStream(AwinStream):
         th.Property("advertiserCost", th.ObjectType(
             th.Property("amount", th.NumberType),
             th.Property("currency", th.StringType),
+        )),
+        th.Property("basketProducts", th.ArrayType(
+            th.ObjectType(
+                th.Property("productId", th.StringType),
+                th.Property("productName", th.StringType),
+                th.Property("unitPrice", th.NumberType),
+                th.Property("quantity", th.IntegerType),
+                th.Property("skuCode", th.StringType),
+                th.Property("commissionGroupCode", th.StringType),
+                th.Property("category", th.StringType),
+            )
         )),
     ).to_dict()
 
