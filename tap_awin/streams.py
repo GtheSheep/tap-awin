@@ -79,7 +79,7 @@ class TransactionsStream(AwinStream):
             th.Property("amount", th.NumberType),
             th.Property("currency", th.StringType),
         )),
-        th.Property("ipHash", th.IntegerType),
+        th.Property("ipHash", th.StringType),
         th.Property("customerCountry", th.StringType),
         th.Property("clickRefs", th.ObjectType(
             th.Property("clickRef", th.StringType),
