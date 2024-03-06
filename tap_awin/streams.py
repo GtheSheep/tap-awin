@@ -79,7 +79,7 @@ class TransactionsStream(AwinStream):
             th.Property("amount", th.NumberType),
             th.Property("currency", th.StringType),
         )),
-        th.Property("ipHash", th.IntegerType),
+        th.Property("ipHash", th.StringType),
         th.Property("customerCountry", th.StringType),
         th.Property("clickRefs", th.ObjectType(
             th.Property("clickRef", th.StringType),
@@ -163,20 +163,27 @@ class TransactionsStream(AwinStream):
         else:
             start_date = self.get_starting_timestamp(context) - datetime.timedelta(days=self.config.get("lookback_days"))
         today = datetime.datetime.now(tz=start_date.tzinfo)
-        end_date = min(start_date + datetime.timedelta(days=1), today)
-        params = {
-            'startDate': datetime.datetime.strftime(
+        batch_size_days = self.config.get("request_batch_size_days")
+        if batch_size_days > 31:
+            self.logger.info(f"Maximum day batch size is 31 days. Falling back to default batch size of 1 day.")
+            batch_size_days = 1
+        end_date = min(start_date + datetime.timedelta(days=batch_size_days), today)
+        formatted_start_date = datetime.datetime.strftime(
                 start_date.replace(hour=0, minute=0, second=0, microsecond=0),
                 TIMESTAMP_FORMAT
-            ),
-            'endDate': datetime.datetime.strftime(
+            )
+        formatted_end_date = datetime.datetime.strftime(
                 end_date.replace(hour=0, minute=0, second=0, microsecond=0),
                 TIMESTAMP_FORMAT
-            ),
+            )
+        params = {
+            'startDate': formatted_start_date,
+            'endDate': formatted_end_date,
             'timezone': self.config.get("timezone"),
             'dateType': 'transaction',
             'accessToken': self.config.get("api_token")
         }
+        self.logger.info(f"Requesting transaction data from {formatted_start_date} to {formatted_end_date}.")
         return params
 
     def get_next_page_token(

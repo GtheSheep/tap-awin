@@ -49,6 +49,13 @@ class TapAwin(Tap):
             default=30,
             description="Number of days to lookback to re-sync transactions"
         ),
+        th.Property(
+            "request_batch_size_days",
+            th.IntegerType,
+            description="Number of days to batch in a single request. Maximum is 31.",
+            default=1
+        ),
+            
     ).to_dict()
 
     def discover_streams(self) -> List[Stream]:
